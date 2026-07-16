@@ -25,9 +25,42 @@ def pre_order_dfs(root: Optional[TreeNode]) -> List:
     return result
 
 
+# TODO: SUPER HARD TO UNDERSTAND
 def in_order_dfs(root: Optional[TreeNode]) -> List:
-    pass
+    stack = []
+    result = []
+    current = root
+
+    while current or stack:
+
+        # Reach the leftmost node of the current node
+        while current:
+            stack.append(current)
+            current = current.left
+
+        # Pop the current element
+        current = stack.pop()
+        result.append(current.val)
+        
+        # Move to its right subtree
+        current = current.right
 
 
+
+# NOTE: This is reverse of Root -> Right -> Left (Modified pre order)
 def post_order_dfs(root: Optional[TreeNode]) -> List:
-    pass
+    if not root:
+        return []
+    
+    stack, result = [root], []
+    while stack:
+        node = stack.pop()
+        result.append(node.val)
+
+        if node.left:
+            stack.append(node.left)
+
+        if node.right:
+            stack.append(node.right)
+    
+    return result[::-1]  # Reversed becomes Left -> Right -> Root
